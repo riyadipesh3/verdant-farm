@@ -1,0 +1,289 @@
+/* ============================================================================
+   TEMPLATE 12 - VERDANT
+   Design read: working organic market farm. River-silt valley land, produce
+   sold by weight, everything explained in plain numbers. Deep forest accent
+   on a cool light-green white, generous photography, editorial serif body.
+   VARIANCE 6 / MOTION 4 / DENSITY 4
+
+   Theme lock: light only. One accent (forest #2f4a24). Two radius values, see
+   the shape rule below.
+
+   SERIF JUSTIFICATION: the brief is a real farm selling real crops to people
+   who cook. Bitter (slab display) carries the signage voice, Source Serif 4
+   carries the editorial body. Sans is reserved for nothing: a farm either has
+   a voice or it has a template, and the serif is the voice.
+   ========================================================================= */
+
+@import 'tailwindcss';
+
+@import '@fontsource-variable/bitter';
+@import '@fontsource-variable/source-serif-4';
+
+/* --------------------------------------------------------------------------
+   TOKENS
+   -------------------------------------------------------------------------- */
+@theme {
+  --font-display: 'Bitter Variable', ui-sans-serif, Georgia, serif;
+  --font-body: 'Source Serif 4 Variable', Georgia, serif;
+
+  /* Cool light-green white. Deliberately NOT the premium cream family
+     (#f5f1ea / #f7f5f1 / #fbf8f1 / #efeae0 / #ece6db / #faf7f1 / #e8dfcb). */
+  --color-canvas: #f4f6f0;
+  --color-surface: #ffffff;
+  --color-shell: #e9eee2;
+  --color-ink: #14170f;
+  --color-body: #41463a;
+  --color-mute: #646c5a;
+  --color-hairline: #dbe0d2;
+  --color-accent: #2f4a24;
+  --color-accent-soft: #e2ead9;
+
+  /* SHAPE RULE, two steps, nothing in between:
+     9999px pill  -> every interactive element: buttons, inputs, the menu
+                      toggle, price chips, the scroll-rail cards.
+     6px          -> every non-interactive container: image frames, produce
+                      tiles, detail panels.
+     Locked with `* { border-radius: var(--radius-card) }` so nothing escapes
+     into a third value, then pills are re-applied on the interactive set. */
+  --radius-pill: 9999px;
+  --radius-card: 6px;
+
+  --shadow-soft: 0 1px 2px rgba(28, 40, 20, 0.05), 0 10px 28px rgba(28, 40, 20, 0.07);
+}
+
+:root {
+  --radius-card: 6px;
+}
+
+* {
+  border-radius: var(--radius-card);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-body);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.68;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-canvas);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-pill);
+}
+
+/* --------------------------------------------------------------------------
+   COMPONENTS
+   -------------------------------------------------------------------------- */
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: 1400px;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .shell {
+      padding-inline: 2.5rem;
+    }
+  }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  .display-xl {
+    font-size: clamp(2.25rem, 1.4rem + 2.8vw, 3.125rem);
+  }
+
+  .display-lg {
+    font-size: clamp(1.85rem, 1.2rem + 2.1vw, 2.75rem);
+    line-height: 1.04;
+  }
+
+  .display-md {
+    font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2rem);
+    line-height: 1.08;
+  }
+
+  .display-sm {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink);
+  }
+
+  .lede {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    max-width: 60ch;
+    color: var(--color-body);
+  }
+
+  /* Small uppercase tracked label. Budget is one per three sections. */
+  .micro {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-mute);
+  }
+
+  /* Interactive set: pill radius. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    padding: 0.8125rem 1.625rem;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 160ms ease, color 160ms ease,
+      transform 120ms ease, border-color 160ms ease;
+  }
+
+  .btn:active {
+    transform: translateY(1px);
+  }
+
+  .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-canvas);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-ink);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-hairline);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .field {
+    width: 100%;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--color-hairline);
+    background: var(--color-surface);
+    padding: 0.8125rem 1.125rem;
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--color-ink);
+    transition: border-color 160ms ease;
+  }
+
+  .field:hover {
+    border-color: var(--color-mute);
+  }
+
+  .field:focus {
+    border-color: var(--color-accent);
+    outline: none;
+  }
+
+  .frame {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+    background: var(--color-shell);
+  }
+
+  .frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Scroll-snap practice rail. Internal scroll only, never page overflow. */
+.rail {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-hairline) transparent;
+}
+
+.rail > * {
+  scroll-snap-align: start;
+  flex: 0 0 min(78%, 21rem);
+}
+
+@media (min-width: 640px) {
+  .rail > * {
+    flex-basis: min(46%, 22rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .rail > * {
+    flex-basis: 20rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .rail {
+    scroll-behavior: auto;
+  }
+}
+
+@source "./**/*.{tsx,ts}";
